@@ -8,9 +8,9 @@ module.exports.run = (bot, message, parameters,) => {
     let character = parameters[0]; //тут мы ожидаем что юзер рилм вписал итд
     let realm = parameters[1];
         if(realm == null) {realm = "howlingfjord"}
-    let url = `https://raider.io/api/v1/characters/profile?region=eu&realm=${RuNames[realm]}&name=${encodeURI(character)}&fields=gear%2Craid_progression%2Cguild`;
+    let url = `https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${encodeURI(character)}&fields=gear%2Craid_progression%2Cguild`;
     console.log(url)
-   return request.get(`https://raider.io/api/v1/characters/profile?region=eu&realm=${RuNames[realm]}&name=${encodeURI(character)}&fields=gear%2Craid_progression%2Cguild`)
+   return request.get(`https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${encodeURI(character)}&fields=gear%2Craid_progression%2Cguild`)
     .then (response => {
          console.log(response) 
         let res = JSON.parse(response)
