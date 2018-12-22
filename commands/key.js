@@ -5,6 +5,7 @@ const RuNames = require('./RuNames.json')
 module.exports.run = (bot, message, parameters,) => {
     let character = parameters[0]; //тут мы ожидаем что юзер рилм вписал итд
     let realm = parameters[1];
+        if(RuNames[realm] !== undefined) realm = RuNames[realm]
         if(realm == null) {realm = "howlingfjord"}
     let url = `https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${encodeURI(character)}&fields=mythic_plus_scores%2Cmythic_plus_highest_level_runs%2Cmythic_plus_weekly_highest_level_runs`;
     console.log(url)
