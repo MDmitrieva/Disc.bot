@@ -34,7 +34,7 @@ module.exports.run = (bot, message, parameters,) => {
         result+=`**Спек:** ${RuNames[spec]}`+"\n"
         result+=`**Илвл:** ${ilvl}/${max_ilvl}`+"\n"
         result+=`**Гильдия:** ${guild}`+"\n"
-        result+=`**Достижения:** ${ap}`+"\n"
+        result+=`**Очки достижений:** ${ap}`+"\n"
     for (let raid in rp)   
      {
         if(actualRaids[raid] != null) {
