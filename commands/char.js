@@ -1,9 +1,7 @@
 const discord = require("discord.js");
 const request = require('request-promise')
 const RuNames = require('./RuNames.json')
-const actualRaids = {
-    uldir: "Ульдир"
-}    
+
 module.exports.run = (bot, message, parameters,) => {
     let character = parameters[0]; //тут мы ожидаем что юзер рилм вписал итд
     let realm = parameters[1];
@@ -20,13 +18,13 @@ module.exports.run = (bot, message, parameters,) => {
             var name = character.name
             var thumb = character.thumbnail_url
             var rp = character.raid_progression
-            var uldir = rp.uldir
             var who = character.class
             var spec = character.active_spec_name
             var ap = character.achievement_points
             var ilvl = character.gear.item_level_equipped
             var max_ilvl = character.gear.item_level_total
             var guild = character.guild.name
+      
 
        let result = " "
        result+=`**${name}**\n`
@@ -35,17 +33,21 @@ module.exports.run = (bot, message, parameters,) => {
         result+=`**Илвл:** ${ilvl}/${max_ilvl}`+"\n"
         result+=`**Гильдия:** ${guild}`+"\n"
         result+=`**Очки достижений:** ${ap}`+"\n"
-    for (let raid in rp)   
+
+        for (var raid in rp)   
      {
-        if(actualRaids[raid] != null) {
-            result+=`**${actualRaids[raid]} прогресс:**\n`
-            for (let raid_info in uldir) {
+         
+        if(RuNames[raid] != null) {
+            result+=`**${RuNames[raid]} прогресс:**\n`
+            for (let raid_info in rp[raid]) {
+             
                 if(RuNames[raid_info] != null)
-                result+=RuNames[raid_info]+ uldir[raid_info]+"\n" 
+                result+=RuNames[raid_info]+ rp[raid][raid_info] +"\n" 
             }
         }
     } 
-        return { message:result, files: [thumb]}
+
+        return { files: [thumb], message:result}
     })
 }
 module.exports.help = {
