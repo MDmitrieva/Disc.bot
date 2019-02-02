@@ -44,6 +44,7 @@ bot.on("message", async message => {
 })
 
 bot.login(config.token);
+bot.on('error', console.error);
 
 
 
