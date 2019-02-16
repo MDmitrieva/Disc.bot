@@ -1,15 +1,16 @@
 const discord = require("discord.js");
 const request = require('request-promise')
 const RuNames = require('./RuNames.json')
+const config = require('C:/bot/config.json')
 
 module.exports.run = (bot, message, parameters,) => {
     let character = parameters[0]; //тут мы ожидаем что юзер рилм вписал итд
     let realm = parameters[1];
     if(RuNames[realm] !== undefined) realm = RuNames[realm]
-    if(realm == null) {realm = "howlingfjord"}
-    let url = `https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${encodeURI(character)}&fields=gear%2Craid_progression%2Cguild`;
+   // if(realm == null) {realm = "howlingfjord"}
+    let url = `https://eu.api.blizzard.com/wow/character/gordunni/${encodeURI(character)}/?locale=ru_RU&access_token=${(config.blizzToken)}`;
     console.log(url)
-   return request.get(`https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${encodeURI(character)}&fields=gear%2Craid_progression%2Cguild`)
+   return request.get(`https://eu.api.blizzard.com/wow/character/gordunni/${encodeURI(character)}/?locale=ru_RU&access_token=${(config.blizzToken)}`)
     .then (response => {
          console.log(response) 
         let res = JSON.parse(response)
@@ -23,10 +24,8 @@ module.exports.run = (bot, message, parameters,) => {
             var ap = character.achievement_points
             var ilvl = character.gear.item_level_equipped
             var max_ilvl = character.gear.item_level_total
-            var guild = character.guild == null ? "Без гильдии" : character.guild.name
-
+            var guild = character.guild.name
       
-           
 
        let result = " "
        result+=`**${name}**\n`
@@ -35,7 +34,6 @@ module.exports.run = (bot, message, parameters,) => {
         result+=`**Илвл:** ${ilvl}/${max_ilvl}`+"\n"
         result+=`**Гильдия:** ${guild}`+"\n"
         result+=`**Очки достижений:** ${ap}`+"\n"
-
 
         for (var raid in rp)   
      {
@@ -49,12 +47,10 @@ module.exports.run = (bot, message, parameters,) => {
             }
         }
     } 
-     //   for (var guild1 in guild)
-       
 
         return { files: [thumb], message:result}
     })
 }
 module.exports.help = {
-    name: "имя"
+    name: "имя1"
 }
