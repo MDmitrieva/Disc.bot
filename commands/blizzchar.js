@@ -2,17 +2,27 @@ const discord = require("discord.js");
 const request = require('request-promise')
 const RuNames = require('./RuNames.json')
 const config = require('C:/bot/config.json')
+const BLIZZARD_CLIENT_ID = config.BLIZZARD_CLIENT_ID
+const BLIZZARD_CLIENT_SECRET = config.BLIZZARD_CLIENT_SECRET
+const blizzard = require('blizzard.js').initialize({
+    key: BLIZZARD_CLIENT_ID,
+    secret: BLIZZARD_CLIENT_SECRET,
+  });
 
 module.exports.run = (bot, message, parameters,) => {
     let character = parameters[0]; //тут мы ожидаем что юзер рилм вписал итд
     let realm = parameters[1];
     if(RuNames[realm] !== undefined) realm = RuNames[realm]
-   // if(realm == null) {realm = "howlingfjord"}
-    let url = `https://eu.api.blizzard.com/wow/character/gordunni/${encodeURI(character)}/?locale=ru_RU&access_token=${(config.blizzToken)}`;
-    console.log(url)
-   return request.get(`https://eu.api.blizzard.com/wow/character/gordunni/${encodeURI(character)}/?locale=ru_RU&access_token=${(config.blizzToken)}`)
-    .then (response => {
-         console.log(response) 
+    if(realm == null) {realm = "howlingfjord"}
+   blizzard.wow.character(['profile'], { origin: 'us', realm: realm, name: character })
+    .then(response => {
+        console.log(response.data)
+     //});
+   // let url = `https://eu.api.blizzard.com/wow/character/gordunni/${encodeURI(character)}/?locale=ru_RU&access_token=${(config.blizzToken)}`;
+  //  console.log(url)
+  // return request.get(`https://eu.api.blizzard.com/wow/character/gordunni/${encodeURI(character)}/?locale=ru_RU&access_token=${(config.blizzToken)}`)
+  //  .then (response => {
+    //     console.log(response) 
         let res = JSON.parse(response)
         console.log(res)
         var character = res
