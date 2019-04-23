@@ -2,11 +2,12 @@ const Discord = require('discord.js');
 const config = require('./config.json')
 const bot = new Discord.Client({disableEveryone: true});
 const fs = require("fs");
+const underscore = require("underscore");
 const RuNames = require('./commands/RuNames.json')
-const blizzard = require('blizzard.js').initialize({
-    key: BLIZZARD_CLIENT_ID,
-    secret: BLIZZARD_CLIENT_SECRET,
-  });
+//const blizzard = require('blizzard.js').initialize({
+ //   key: BLIZZARD_CLIENT_ID,
+ //   secret: BLIZZARD_CLIENT_SECRET,
+ // });
 bot.commands = new Discord.Collection();
 
 

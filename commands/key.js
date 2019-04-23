@@ -1,6 +1,8 @@
 const discord = require("discord.js");
 const request = require('request-promise')
 const RuNames = require('./RuNames.json')
+const underscore = require("underscore");
+const _ = require("underscore");
    
 module.exports.run = (bot, message, parameters,) => {
     let character = parameters[0]; //тут мы ожидаем что юзер рилм вписал итд
@@ -19,7 +21,8 @@ module.exports.run = (bot, message, parameters,) => {
             var mps = key.mythic_plus_scores.all
             var week = key.mythic_plus_weekly_highest_level_runs
             var best = key.mythic_plus_highest_level_runs
-     
+            let sortedRuns = _.sortBy(week, 'score');
+            var weekBest = _.last(sortedRuns)
        let result = " "
        result+=`**${name}**\n`
        result+=`**RIO:** ${mps}\n`
@@ -27,11 +30,11 @@ module.exports.run = (bot, message, parameters,) => {
         if(week.length == 0) {result+=`**Ключ на этом КД не пройден!**\n`}
         else 
         { 
-                result+=`**Лучший ключ на неделе:** ${RuNames[week[0].dungeon]} +${week[0].mythic_level}\n`
-                    if(week[0].num_keystone_upgrades == 0) {result+=`Кто-то слоупок и не успел вовремя \n`}
+                result+=`**Лучший ключ на неделе:** ${RuNames[weekBest.dungeon]} +${weekBest.mythic_level}\n`
+                    if(weekBest.num_keystone_upgrades == 0) {result+=`Кто-то слоупок и не успел вовремя \n`}
                     else 
                     {
-                        result+=`Ключ улучшен на + ${week[0].num_keystone_upgrades}\n` 
+                        result+=`Ключ улучшен на + ${weekBest.num_keystone_upgrades}\n` 
                     }
             
         }
