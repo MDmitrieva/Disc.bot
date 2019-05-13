@@ -23,6 +23,9 @@ module.exports.run = (bot, message, parameters,) => {
             var best = key.mythic_plus_highest_level_runs
             let sortedRuns = _.sortBy(week, 'score');
             var weekBest = _.last(sortedRuns)
+            let bestSortedRuns = _.sortBy(best, 'score');
+            var seasonBest = _.last(bestSortedRuns)
+
        let result = " "
        result+=`**${name}**\n`
        result+=`**RIO:** ${mps}\n`
@@ -40,8 +43,8 @@ module.exports.run = (bot, message, parameters,) => {
         }
         if(best.length == 0) {result+=`**Да он(а) в этом сезоне никуда и не ходил(а)!**\n`}
         else{
-            result+=`**Лучший ключ в сезоне** ${RuNames[best[0].dungeon]} +${best[0].mythic_level}\n`
-            result+=`Ключ улучшен на + ${best[0].num_keystone_upgrades}\n` 
+            result+=`**Лучший ключ в сезоне** ${RuNames[seasonBest.dungeon]} +${seasonBest.mythic_level}\n`
+            result+=`Ключ улучшен на + ${seasonBest.num_keystone_upgrades}\n` 
         }
         return { message:result, files: []}
     })
