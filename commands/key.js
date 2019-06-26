@@ -21,18 +21,11 @@ module.exports.run = (bot, message, parameters,) => {
             var mps = key.mythic_plus_scores.all
             var week = key.mythic_plus_weekly_highest_level_runs
             var best = key.mythic_plus_highest_level_runs
-<<<<<<< Updated upstream
             let sortedRuns = _.sortBy(week, 'score');
             var weekBest = _.last(sortedRuns)
             let bestSortedRuns = _.sortBy(best, 'score');
             var seasonBest = _.last(bestSortedRuns)
 
-=======
-            let weekSortedRuns = _.sortBy(week, 'score');
-            var weekBest = _.last(weekSortedRuns)
-            let seasonSortedRuns = _.sortBy(best, 'score');
-            var seasonBest = _.last(seasonSortedRuns)
->>>>>>> Stashed changes
        let result = " "
        result+=`**${name}**\n`
        result+=`**RIO:** ${mps}\n`
@@ -50,13 +43,8 @@ module.exports.run = (bot, message, parameters,) => {
         }
         if(best.length == 0) {result+=`**Да он(а) в этом сезоне никуда и не ходил(а)!**\n`}
         else{
-<<<<<<< Updated upstream
             result+=`**Лучший ключ в сезоне** ${RuNames[seasonBest.dungeon]} +${seasonBest.mythic_level}\n`
             result+=`Ключ улучшен на + ${seasonBest.num_keystone_upgrades}\n` 
-=======
-            result+=`**Лучший ключ в сезоне** ${RuNames[seasonBest[0].dungeon]} +${seasonBest[0].mythic_level}\n`
-            result+=`Ключ улучшен на + ${seasonBest[0].num_keystone_upgrades}\n` 
->>>>>>> Stashed changes
         }
         return { message:result, files: []}
     })

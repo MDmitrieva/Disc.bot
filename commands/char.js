@@ -9,11 +9,13 @@ module.exports.run = (bot, message, parameters,) => {
     if(RuNames[realm] !== undefined) realm = RuNames[realm];
     if(realm == null) {realm = "howlingfjord"}
     let url = `https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${encodeURI(character)}&fields=gear%2Craid_progression%2Cguild%2Craid_achievement_curve%3Auldir%3Acrucible-of-storms%3Abattle-of-dazaralor`;
-
+    console.log(url)
     return request.get(`https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${encodeURI(character)}&fields=gear%2Craid_progression%2Cguild%2Craid_achievement_curve%3Auldir%3Acrucible-of-storms%3Abattle-of-dazaralor`)
         .then (response => {
             let res = JSON.parse(response);
+            console.log(response) 
             let character = res;
+            console.log(res)
             let name = character.name;
             let thumb = character.thumbnail_url;
             let rp = character.raid_progression;
