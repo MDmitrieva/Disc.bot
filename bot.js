@@ -43,13 +43,15 @@ bot.on("message", async message => {
     let args = messageArray.slice(1); // после него идут параметры команды, мы достаем их тут [param1, param2, ....] и передаем в команду 
     let commandfile = bot.commands.get(cmd.slice(prefix.length));
    commandfile.run(bot, message, args)
-   .then (display => message.channel.send(display.message, {files:display.files}))
-   
+   .then (display => {
+       if(display != null)
+       message.channel.send(display.message, {files:display.files})}) 
 
 })
 
 bot.login(config.token);
 bot.on('error', console.error);
+
 
 
 
