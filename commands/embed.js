@@ -25,37 +25,28 @@ module.exports.run = (bot, message, parameters,) => {
             var weekBest = _.last(sortedRuns)
             let bestSortedRuns = _.sortBy(best, 'score');
             var seasonBest = _.last(bestSortedRuns)
-            var photo = key.thumbnail_url
+            var profile = key.profile_url
+            var photo = key.thumbnail_url;
+            var weekUp = (weekBest.num_keystone_upgrades == 0) ? `Кто-то слоупок и не успел вовремя \n` : `Ключ улучшен на + ${weekBest.num_keystone_upgrades}\n`
+            var topWeek =  (week.length == 0) ? `**Ключ на этом КД не пройден!**\n` : `${RuNames[weekBest.dungeon]} +${weekBest.mythic_level}\n ${weekUp}\n` 
+            var topSeason = (best.length == 0) ? `**Да он(а) в этом сезоне никуда и не ходил(а)!**\n` : `${RuNames[seasonBest.dungeon]} +${seasonBest.mythic_level}\n Ключ улучшен на + ${seasonBest.num_keystone_upgrades}\n`
+           
+                
        let embed =  {
            title: `**${name}**`,
            color: 3447003,
-           thumbnail: photo,
+           thumbnail: {
+               url: photo},
            fields: [
-               {name: "**RIO:**", 
-               value:`${mps}`,
-               inline: true},
+               {name: `**RIO: ${mps}**`, 
+               value: profile},
                {name: `**Лучший ключ на неделе:**`,
-               value: `${RuNames[weekBest.dungeon]} +${weekBest.mythic_level}`,
-                if(week.length == 0) {name=`**Ключ на этом КД не пройден!**\n`}}
-           ]
-};    
-    
-           
-      
-        if(week.length == 0) {result+=`**Ключ на этом КД не пройден!**\n`}
-        else 
-        { 
-                result+=`**Лучший ключ на неделе:** ${RuNames[weekBest.dungeon]} +${weekBest.mythic_level}\n`
-                    if(weekBest.num_keystone_upgrades == 0) {result+=`Кто-то слоупок и не успел вовремя \n`}
-                    else 
-                    {result+=`Ключ улучшен на + ${weekBest.num_keystone_upgrades}\n`}
-            
-        }
-        if(best.length == 0) {result+=`**Да он(а) в этом сезоне никуда и не ходил(а)!**\n`}
-        else{
-            result+=`**Лучший ключ в сезоне** ${RuNames[seasonBest.dungeon]} +${seasonBest.mythic_level}\n`
-            result+=`Ключ улучшен на + ${seasonBest.num_keystone_upgrades}\n` 
-        }
+               value: topWeek,
+               inline: true},
+               {name: `**Лучший ключ в сезоне**`, 
+               value: topSeason,
+               inline: true}]
+};     
         message.channel.send({embed});
     })
 }
