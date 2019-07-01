@@ -1,55 +1,93 @@
 const discord = require("discord.js");
 const request = require('request-promise')
 const RuNames = require('./RuNames.json')
-const underscore = require("underscore");
-const _ = require("underscore");
-   
+const RaidNames = require('./RaidNames.json')
+
 module.exports.run = (bot, message, parameters,) => {
     let character = parameters[0]; //тут мы ожидаем что юзер рилм вписал итд
     let realm = parameters[1];
-        if(RuNames[realm] !== undefined) realm = RuNames[realm]
-        if(realm == null) {realm = "howlingfjord"}
-    let url = `https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${encodeURI(character)}&fields=mythic_plus_scores%2Cmythic_plus_highest_level_runs%2Cmythic_plus_weekly_highest_level_runs`;
+    if(RuNames[realm] !== undefined) realm = RuNames[realm];
+    if(realm == null) {realm = "howlingfjord"}
+    let url = `https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${encodeURI(character)}&fields=gear%2Craid_progression%2Cguild%2Craid_achievement_curve%3Auldir%3Acrucible-of-storms%3Abattle-of-dazaralor`;
     console.log(url)
-   return request.get(`https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${encodeURI(character)}&fields=mythic_plus_scores%2Cmythic_plus_highest_level_runs%2Cmythic_plus_weekly_highest_level_runs`)
-    .then (response => {
-         console.log(response) 
-        let res = JSON.parse(response)
-        console.log(res)
-        var key = res
-            var name = key.name
-            var mps = key.mythic_plus_scores.all
-            var week = key.mythic_plus_weekly_highest_level_runs
-            var best = key.mythic_plus_highest_level_runs
-            let sortedRuns = _.sortBy(week, 'score');
-            var weekBest = _.last(sortedRuns)
-            let bestSortedRuns = _.sortBy(best, 'score');
-            var seasonBest = _.last(bestSortedRuns)
-            var profile = key.profile_url
-            var photo = key.thumbnail_url;
-            var weekUp = (weekBest.num_keystone_upgrades == 0) ? `Кто-то слоупок и не успел вовремя \n` : `Ключ улучшен на + ${weekBest.num_keystone_upgrades}\n`
-            var topWeek =  (week.length == 0) ? `**Ключ на этом КД не пройден!**\n` : `${RuNames[weekBest.dungeon]} +${weekBest.mythic_level}\n ${weekUp}\n` 
-            var topSeason = (best.length == 0) ? `**Да он(а) в этом сезоне никуда и не ходил(а)!**\n` : `${RuNames[seasonBest.dungeon]} +${seasonBest.mythic_level}\n Ключ улучшен на + ${seasonBest.num_keystone_upgrades}\n`
-           
-                
-       let embed =  {
-           title: `**${name}**`,
-           color: 3447003,
-           thumbnail: {
-               url: photo},
-           fields: [
-               {name: `**RIO: ${mps}**`, 
-               value: profile},
-               {name: `**Лучший ключ на неделе:**`,
-               value: topWeek,
-               inline: true},
-               {name: `**Лучший ключ в сезоне**`, 
-               value: topSeason,
-               inline: true}]
-};     
-        message.channel.send({embed});
-    })
-}
-module.exports.help = {
-    name: "test"
-}
+    return request.get(`https://raider.io/api/v1/characters/profile?region=eu&realm=${realm}&name=${encodeURI(character)}&fields=gear%2Craid_progression%2Cguild%2Craid_achievement_curve%3Auldir%3Acrucible-of-storms%3Abattle-of-dazaralor`)
+        .then (response => {
+            let res = JSON.parse(response);
+            console.log(response) 
+            let character = res;
+            console.log(res)
+            let name = character.name;
+            let thumb = character.thumbnail_url;
+            let rp = character.raid_progression;
+            let who = character.class;
+            let spec = character.active_spec_name;
+            let ap = character.achievement_points;
+            let ilvl = character.gear.item_level_equipped;
+            let max_ilvl = character.gear.item_level_total;
+            let guild = character.guild == null ? "Без гильдии" : character.guild.name;
+            let curve = character.raid_achievement_curve;
+            let result = " ";
+
+//    result+=`**${name}**\n`;
+     //       result+=`**Класс:** ${RuNames[who]}`+"\n";
+       //     result+=`**Спек:** ${RuNames[spec]}`+"\n";
+        //    result+=`**Илвл:** ${ilvl}/${max_ilvl}`+"\n";
+        //    result+=`**Гильдия:** ${guild}`+"\n";
+        //    result+=`**Очки достижений:** ${ap}`+"\n";
+    
+       //     if (curve.length == 0)
+      //          result += `**Ни одной курвы в аддоне!**\n`;
+     //       else {
+       //         curve.forEach(element => {
+       //             let aotc = element.raid;
+                    
+         //           if (element.aotc != null && element.cutting_edge != null)
+         //               result+=`**${RaidNames[aotc]}** - есть курва, есть кромка\n`;
+       //             else if (element.aotc != null)
+       //                 result+=`**${RaidNames[aotc]}** - есть курва\n`;
+      //              else if (element.cutting_edge != null)
+      //                  result+=`**${RaidNames[aotc]}** - есть кромка\n`;
+      //          });
+         //   }
+
+         //   for (var raid in rp)
+         //   {          
+         //       if(RuNames[raid] != null) {
+           //         result += `**${RuNames[raid]} прогресс:**\n`;
+            //        for (let raid_info in rp[raid]) {
+            //            if (RuNames[raid_info] != null)
+            //                result+=RuNames[raid_info]+ rp[raid][raid_info] +"\n";
+                    //}
+               // }
+          //  }
+                let embed =  {
+                title: `**${name}**`,
+                color: 3447003,
+                thumbnail: {
+                    url: thumb},
+                fields: [
+                    {name: `**Класс**`, 
+                    value: `${RuNames[who]}`,
+                    inline: true},
+                    {name: `**Спек**`,
+                    value: `${RuNames[spec]}`,
+                    inline: true},
+                    {name: `**Илвл**`, 
+                    value: `${ilvl}/${max_ilvl}`+"\n",
+                    inline: true},
+                    {name: `**Гильдия:**`,
+                    value: `${guild}`,
+                    inline: true},
+                    {name: `**Очки достижений:**`,
+                    value: `${ap}`+"\n"
+
+                    }
+                ]}
+
+                //}]
+     } ,    
+             message.channel.send({embed})
+     )}
+     module.exports.help = {
+         name: "test1"
+     }
