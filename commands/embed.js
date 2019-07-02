@@ -25,29 +25,63 @@ module.exports.run = (bot, message, parameters,) => {
             let ilvl = character.gear.item_level_equipped;
             let max_ilvl = character.gear.item_level_total;
             let guild = character.guild == null ? "Без гильдии" : character.guild.name;
-            let curve = character.raid_achievement_curve;
-            let result = " ";
-
-//    result+=`**${name}**\n`;
-     //       result+=`**Класс:** ${RuNames[who]}`+"\n";
-       //     result+=`**Спек:** ${RuNames[spec]}`+"\n";
-        //    result+=`**Илвл:** ${ilvl}/${max_ilvl}`+"\n";
-        //    result+=`**Гильдия:** ${guild}`+"\n";
-        //    result+=`**Очки достижений:** ${ap}`+"\n";
+            let curve = character.raid_achievement_curve; 
+        
     
-       //     if (curve.length == 0)
-      //          result += `**Ни одной курвы в аддоне!**\n`;
-     //       else {
-       //         curve.forEach(element => {
-       //             let aotc = element.raid;
+            var embed =  {
+                title: `**${name}** | **${RuNames[who]}**-**${RuNames[spec]}**`,
+                color: 3447003,
+                thumbnail: {
+                    url: thumb},
+                fields: [   
+                    {name: `**Итем-лвл:**`, 
+                    value: `${ilvl}/${max_ilvl}`+"\n",
+                    inline: true},
+                    {name: `**Гильдия:**`,
+                    value: `${guild}`,
+                    inline: true},
+                    {name: `**Очки достижений:**`,
+                    value: `${ap}`+"\n",
+                    inline: false},
+            
+                  
+                ]};   
+
+                if (curve.length == 0)
+                embed.fields.push({name: `Рейдовые достижения`, value:`Ни одной курвы в аддоне\n`,inline: true});
+                else
+                    curve.forEach(element => {
+                        let aotc = element.raid;   
+                      if (element.aotc != null && element.cutting_edge != null)
+                      embed.fields.push({name: `**${RaidNames[aotc]}:**`, value:`герой св. времени + кромка\n`,inline: true});
+                    else if (element.aotc != null)
+                    embed.fields.push({name: `**${RaidNames[aotc]}:**`, value:`герой св. времени\n`,inline: true});
+                    else if (element.cutting_edge != null)
+                    embed.fields.push({name: `**${RaidNames[aotc]}:**`, value:`на кромке лезвия\n`,inline: true})},
+                    )
+                    for (var raid in rp)
+           {          
+                if(RuNames[raid] != null) {
+                  
+                   for (let raid_info in rp[raid]) {
+                        if (RuNames[raid_info] != null)
+                        embed.fields.push({name: `**${RuNames[raid]} прогресс:**\n`, value: `${RuNames[raid_info]}+ ${rp[raid][raid_info]} +"\n"`});
+                   }
+                   }}
+                      
+                        // embed.fields.push(RuNames[raid_info]+ rp[raid][raid_info] +"\n");
                     
-         //           if (element.aotc != null && element.cutting_edge != null)
-         //               result+=`**${RaidNames[aotc]}** - есть курва, есть кромка\n`;
-       //             else if (element.aotc != null)
-       //                 result+=`**${RaidNames[aotc]}** - есть курва\n`;
-      //              else if (element.cutting_edge != null)
-      //                  result+=`**${RaidNames[aotc]}** - есть кромка\n`;
-      //          });
+           ///     });
+                        message.channel.send({embed});
+                    })
+                }
+                module.exports.help = {
+                    name: "test"
+                }
+    
+                // details.forEach(element => {
+              //      embed.fields.push({name: element.name, value: element.description})
+
          //   }
 
          //   for (var raid in rp)
@@ -60,34 +94,7 @@ module.exports.run = (bot, message, parameters,) => {
                     //}
                // }
           //  }
-                let embed =  {
-                title: `**${name}**`,
-                color: 3447003,
-                thumbnail: {
-                    url: thumb},
-                fields: [
-                    {name: `**Класс**`, 
-                    value: `${RuNames[who]}`,
-                    inline: true},
-                    {name: `**Спек**`,
-                    value: `${RuNames[spec]}`,
-                    inline: true},
-                    {name: `**Илвл**`, 
-                    value: `${ilvl}/${max_ilvl}`+"\n",
-                    inline: true},
-                    {name: `**Гильдия:**`,
-                    value: `${guild}`,
-                    inline: true},
-                    {name: `**Очки достижений:**`,
-                    value: `${ap}`+"\n"
-
-                    }
-                ]}
+               
 
                 //}]
-     } ,    
-             message.channel.send({embed})
-     )}
-     module.exports.help = {
-         name: "test1"
-     }
+    

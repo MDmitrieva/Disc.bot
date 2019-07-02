@@ -29,10 +29,9 @@ module.exports.run = (bot, message, parameters,) => {
             var profile = key.profile_url
             var photo = key.thumbnail_url;
             var weekUp = weekBest? (weekBest.num_keystone_upgrades == 0) ? `Кто-то слоупок и не успел вовремя \n` : `Ключ улучшен на + ${weekBest.num_keystone_upgrades}\n` : null
-            var topWeek =  weekBest ? `${RuNames[weekBest.dungeon]} +${weekBest.mythic_level}\n ${weekUp}\n` :`**Ключ на этом КД не пройден!**\n`   
-            var topSeason = seasonBest ? `${RuNames[seasonBest.dungeon]} +${seasonBest.mythic_level}\n Ключ улучшен на + ${seasonBest.num_keystone_upgrades}\n` :`**Да он(а) в этом сезоне никуда и не ходил(а)!**\n`  
-           
-                
+            var topWeek =  weekBest ? `${RuNames[weekBest.dungeon]} +${weekBest.mythic_level}\n ${weekUp}\n` :`Ключ на этом КД не пройден!\n`   
+            var topSeason = seasonBest ? `${RuNames[seasonBest.dungeon]} +${seasonBest.mythic_level}\n Ключ улучшен на +${seasonBest.num_keystone_upgrades}\n` :`Ни одного ключа в сезоне. Ленивая жопа!\n`  
+                     
        let embed =  {
            title: `**${name}**`,
            color: 3447003,
@@ -44,7 +43,7 @@ module.exports.run = (bot, message, parameters,) => {
                {name: `**Лучший ключ на неделе:**`,
                value: topWeek,
                inline: true},
-               {name: `**Лучший ключ в сезоне**`, 
+               {name: `**Лучший ключ в сезоне:**`, 
                value: topSeason,
                inline: true}]
 };     
