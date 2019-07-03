@@ -2,12 +2,7 @@ const discord = require("discord.js");
 const request = require('request-promise')
 const RuNames = require('./RuNames.json')
 const config = require('C:/bot/config.json')
-const BLIZZARD_CLIENT_ID = config.BLIZZARD_CLIENT_ID
-const BLIZZARD_CLIENT_SECRET = config.BLIZZARD_CLIENT_SECRET
-const blizzard = require('blizzard.js').initialize({
-    key: BLIZZARD_CLIENT_ID,
-    secret: BLIZZARD_CLIENT_SECRET,
-  });
+
 
 module.exports.run = (bot, message, parameters,) => {
     let character = parameters[0]; //тут мы ожидаем что юзер рилм вписал итд

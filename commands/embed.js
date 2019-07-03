@@ -60,12 +60,19 @@ module.exports.run = (bot, message, parameters,) => {
                     embed.fields.push({name: `**${RaidNames[aotc]}:**`, value:`на кромке лезвия\n`,inline: true})},
                     )
                     for (var raid in rp)
+                    var summary = raid.summary
+                    var heroic = raid.heroic_bosses_killed
+                    var mythic = raid.mythic_bosses_killed
+                   
+
            {          
-                if(RuNames[raid] != null) {
+            
+            if(RuNames[raid] != null) {
                   
-                   for (let raid_info in rp[raid]) {
+                   for (let raid_info in rp[raid]) {      
                         if (RuNames[raid_info] != null)
-                        embed.fields.push({name: `**${RuNames[raid]} прогресс:**\n`, value: `${RuNames[raid_info]}+ ${rp[raid][raid_info]} +"\n"`});
+                       embed.fields.push({name: `**${RuNames[raid]} прогресс:**\n`, value: `${RuNames[raid_info]}+ ${rp[raid][raid_info]} +"\n"`});
+                    //   embed.fields.push({name: `**${RuNames[raid]}**\n`, value: `**${RuNames[raid_info]}:**`+`${rp[raid][raid_info]}` +"\n", inline: true});
                    }
                    }}
                       
