@@ -4,7 +4,7 @@ const bot = new Discord.Client({disableEveryone: true});
 const fs = require("fs");
 const underscore = require("underscore");
 const RuNames = require('./commands/RuNames.json')
-
+const blizzard = require('blizzard.js').initialize({ key: config.BLIZZARD_API_KEY, secret: config.BLIZZARD_API_SECRET, origin: config.default_region });
 bot.commands = new Discord.Collection();
 
 
@@ -28,6 +28,26 @@ fs.readdir("./commands/", (err, files) => {
 bot.on("ready", async () => {
     console.log(`${bot.user.username} is online`)
     bot.user.setActivity("Порно", {type: "WATCHING"});
+
+    blizzard.getApplicationToken({
+		key: config.BLIZZARD_API_KEY,
+		secret: config.BLIZZARD_API_SECRET,
+		origin: config.default_region
+	})
+	.then(response => {
+		// Запихиваем токен в конфиг
+		config.BLIZZARD_API_ACCESS_TOKEN = response.data.access_token;
+		fs.writeFile("./config.json", JSON.stringify(config), (err) => console.error);
+
+		console.log("\x1b[33m", "Прошел валидацию у близзард");
+	})
+	.catch (err => {
+		// ошибки
+		console.log("\x1b[31m", "[ERROR] что-то с креденшелами:");
+		console.log("\x1b[31m", "[ERROR] Error Code: " + err.response.status + " " + err.response.statusText);
+		return err;
+	});
+
 });
 
 bot.on("message", async message => {
