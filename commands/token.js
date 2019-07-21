@@ -1,7 +1,7 @@
 
 const discord = require("discord.js");
 const request = require('request-promise')
-const config = require('c:/bot/config.json')
+const config = require('../config.json')
 
 module.exports.run = (bot, message, args,) => {
    return request.get(`https://eu.api.blizzard.com/data/wow/token/?namespace=dynamic-eu&locale='ru_RU'&access_token=${(config.BLIZZARD_API_ACCESS_TOKEN)}`)

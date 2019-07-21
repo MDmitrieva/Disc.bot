@@ -1,7 +1,7 @@
 const discord = require("discord.js");
 const request = require('request-promise')
 const RuNames = require('./RuNames.json')
-const config = require('C:/bot/config.json')
+const config = require('../config.json')
 
 
 module.exports.run = (bot, message, parameters,) => {

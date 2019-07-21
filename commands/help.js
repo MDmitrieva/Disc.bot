@@ -22,7 +22,7 @@
           timestamp: new Date(),
           footer: {
         //  icon_url: client.user.avatarURL,
-          text: "© Marjam/Sighor"
+          text: "© Marjam/Sighgor"
     }
   }})
 
