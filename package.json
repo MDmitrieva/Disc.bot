@@ -11,9 +11,11 @@
     "request-promise": "^4.2.4",
     "underscore": "^1.9.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "~24.8.0"
+  },
   "scripts": {
-    "test": "!help"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
