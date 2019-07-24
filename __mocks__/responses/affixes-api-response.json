@@ -1,0 +1,26 @@
+{
+    "region": "eu",
+    "title": "Тиранический, Разъяренный, Взрывоопасный, Манящий",
+    "leaderboard_url": "https://raider.io/mythic-plus-affix-rankings/season-bfa-3/all/eu/leaderboards-strict/tyrannical-raging-explosive-beguiling",
+    "affix_details": [{
+        "id": "9",
+        "name": "Тиранический",
+        "description": "Противники-боссы имеют на 40% больше здоровья и наносят на 15% больше урона.",
+        "wowhead_url": "https://wowhead.com/affix=9"
+    }, {
+        "id": "6",
+        "name": "Разъяренный",
+        "description": "Противники, не являющиеся боссами, впадают в ярость, когда у них остается менее 30% здоровья, и наносят на 100% больше урона, пока не погибнут.",
+        "wowhead_url": "https://wowhead.com/affix=6"
+    }, {
+        "id": "13",
+        "name": "Взрывоопасный",
+        "description": "В бою противники периодически призывают взрывоопасные сферы, которые детонируют, если их вовремя не уничтожить.",
+        "wowhead_url": "https://wowhead.com/affix=13"
+    }, {
+        "id": "119",
+        "name": "Манящий",
+        "description": "В подземелье присутствуют посланники Азшары.",
+        "wowhead_url": "https://wowhead.com/affix=119"
+    }]
+}
